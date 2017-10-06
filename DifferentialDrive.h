@@ -1,16 +1,19 @@
+
 #ifndef DifferentialDrive_h
 #define DifferentialDrive_h
+
 
 #include "Arduino.h"
 
 enum direction {
     FORWARD,
     BACKWARD,
+    STOP,
     LEFT,
     RIGHT
 };
 
-struct DifferentialDrive {
+class DifferentialDrive {
     
 private:
     int rightMotorEnable;
@@ -21,12 +24,17 @@ private:
     int leftMotorDirF;
     int leftMotorDirB;
 
-    int rightDefaultSpeed;
     int leftDefaultSpeed;
+    int rightDefaultSpeed;
+
 public:
-    void forward(int, int);
-    void backward(int, int);
-    void left(int, int);
-    void right(int, int);
+    DifferentialDrive();
+    DifferentialDrive(int[], int, int);
+    void forward();
+    void backward();
+    void left();
+    void right();
     void stop();
-}
+};
+
+#endif

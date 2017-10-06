@@ -1,3 +1,6 @@
+#include "Arduino.h"
+#include "DifferentialDrive.h"
+
 /*  
 *   Constructor Parameters 
 *   ( pins[rightMotorEnable, rightMotorDirF, rightMotorDirB,leftMotorEnable, leftMotorDirF, leftMotorDirB], rightDefaultSpeed, leftDefaultSpeed ) 
@@ -5,10 +8,10 @@
 */    
 
 DifferentialDrive::DifferentialDrive() {
-
+  
 }
 
-DifferentialDrive(int pins[],int rDS, int lDS) {
+DifferentialDrive::DifferentialDrive(int pins[],int rDS, int lDS) {
   rightMotorEnable = pins[0];
   rightMotorDirF = pins[1];
   rightMotorDirB = pins[2];
@@ -17,61 +20,61 @@ DifferentialDrive(int pins[],int rDS, int lDS) {
   leftMotorDirF = pins[4];
   leftMotorDirB = pins[5];
 
-  rigthDefaultSpeed = rDS;
+  rightDefaultSpeed = rDS;
   leftDefaultSpeed = lDS;
 }
 
-void DifferentialDrive::forward(int leftSpeed = leftDefaultSpeed, int rightSpeed = rightDefaultSpeed) {
+void DifferentialDrive::forward() {
   //      Right Motor 
-  analogWrite(rightMototrEnable, rightSpeed);
+  analogWrite(rightMotorEnable, rightDefaultSpeed);
   digitalWrite(rightMotorDirF, HIGH);
   digitalWrite(rightMotorDirB, LOW);
   //      Left Motor 
-  analogWrite(leftMototrEnable, leftSpeed);
+  analogWrite(leftMotorEnable, leftDefaultSpeed);
   digitalWrite(leftMotorDirF, HIGH);
   digitalWrite(leftMotorDirB, LOW);      
 }
 
-void DifferentialDrive::backward(int leftSpeed = leftDefaultSpeed, int rightSpeed = rightDefaultSpeed) {
+void DifferentialDrive::backward() {
   //      Right Motor 
-  analogWrite(rightMototrEnable, rightSpeed);
+  analogWrite(rightMotorEnable, rightDefaultSpeed);
   digitalWrite(rightMotorDirF, LOW);
   digitalWrite(rightMotorDirB, HIGH);
   //      Left Motor 
-  analogWrite(leftMototrEnable, leftSpeed);
+  analogWrite(leftMotorEnable, leftDefaultSpeed);
   digitalWrite(leftMotorDirF, LOW);
   digitalWrite(leftMotorDirB, HIGH);      
 }
 
-void DifferentialDrive::left(int leftSpeed = leftDefaultSpeed, int rightSpeed = rightDefaultSpeed) {
+void DifferentialDrive::left() {
   //      Right Motor 
-  analogWrite(rightMototrEnable, rightSpeed);
+  analogWrite(rightMotorEnable, rightDefaultSpeed);
   digitalWrite(rightMotorDirF, LOW);
   digitalWrite(rightMotorDirB, HIGH);
   //      Left Motor 
-  analogWrite(leftMototrEnable, leftSpeed);
+  analogWrite(leftMotorEnable, leftDefaultSpeed);
   digitalWrite(leftMotorDirF, HIGH);
   digitalWrite(leftMotorDirB, LOW);      
 }
 
-void DifferentialDrive::right(int leftSpeed = leftDefaultSpeed, int rightSpeed = rightDefaultSpeed) {
+void DifferentialDrive::right() {
   //      Right Motor 
-  analogWrite(rightMototrEnable,rightSpeed);
+  analogWrite(rightMotorEnable,rightDefaultSpeed);
   digitalWrite(rightMotorDirF,HIGH);
   digitalWrite(rightMotorDirB,LOW);
   //      Left Motor 
-  analogWrite(leftMototrEnable,leftSpeed);
+  analogWrite(leftMotorEnable,leftDefaultSpeed);
   digitalWrite(leftMotorDirF,LOW);
   digitalWrite(leftMotorDirB,HIGH);      
 }
 
 void DifferentialDrive::stop() {
   //      Right Motor 
-  analogWrite(rightMototrEnable,0);
+  analogWrite(rightMotorEnable,0);
   digitalWrite(rightMotorDirF,0);
   digitalWrite(rightMotorDirB,LOW);
   //      Left Motor 
-  analogWrite(leftMototrEnable,0);
+  analogWrite(leftMotorEnable,0);
   digitalWrite(leftMotorDirF,LOW);
   digitalWrite(leftMotorDirB,LOW);      
 }
