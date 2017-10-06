@@ -248,7 +248,7 @@ void setup() {
   server.on("/VCC", HTTP_GET, handleVCC);
   server.on("/generate_204", handleRoot);  //Android captive portal. Maybe not needed. Might be handled by notFound handler.
   server.on("/fwlink", handleRoot);  //Microsoft captive portal. Maybe not needed. Might be handled by notFound handler.
-  server.on("/direction ", HTTP_PUT, directionHandler);
+  server.on("/direction ", HTTP_POST, directionHandler);
   server.onNotFound ( handleNotFound );
   server.begin(); // Web server start
 
