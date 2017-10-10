@@ -2,11 +2,10 @@
 
 function sendDirection(dir) {
     var xhr = new XMLHttpRequest();
-    xhr.open("POST", "/direction?direction="+dir, true);
+    xhr.open("PUT", "/direction?direction="+dir, true);
     xhr.onload = function (e) {
       if (xhr.readyState === 4) {
-        if (xhr.status === 200) {
-          console.log(xhr.responseText);
+                console.log(xhr.responseText);
         } else {
           console.error(xhr.statusText);
         }
@@ -26,58 +25,60 @@ var RIGHT_PRESSED = false;
 document.addEventListener("keypress",function(e) {
     e = e || window.event;
     e = e.keyCode;
+
     if(e == 119) {
         console.log("FORWARD");
+        document.getElementById("dir").innerHTML = "FORWARD";
         sendDirection("FORWARD");
-        var UP_PRESSED = true;
-        var DOWN_PRESSED = false;
-        var LEFT_PRESSED = false;
-        var RIGHT_PRESSED = false;
     }
-    if(e == 115) {
-        console.log("DOWN");
-        sendDirection("BACKWARD");
-        var UP_PRESSED = false;
-        var DOWN_PRESSED = true;
-        var LEFT_PRESSED = false;
-        var RIGHT_PRESSED = false;
+    else if(e == 115) {
+        console.log("STOP");
+        document.getElementById("dir").innerHTML = "STOP";
+        sendDirection("STOP");
     }
-    if(e == 95) {
+    else if(e == 120) {
+        console.log("BACKWARD");
+        document.getElementById("dir").innerHTML = "BACKWARD";
+        sendDirection("BACKKWARD");
+    }
+    else if(e == 97) {
         console.log("LEFT");
+        document.getElementById("dir").innerHTML = "LEFT";
         sendDirection("LEFT");
-        var UP_PRESSED = false;
-        var DOWN_PRESSED = false;
-        var LEFT_PRESSED = true;
-        var RIGHT_PRESSED = false;
     }
-    if(e == 100) {
+    else if(e == 100) {
         console.log("RIGHT");
+        document.getElementById("dir").innerHTML = "RIGHT";
         sendDirection("RIGHT");
-        var UP_PRESSED = false;
-        var DOWN_PRESSED = false;
-        var LEFT_PRESSED = true;
-        var RIGHT_PRESSED = false;
     }
 }, false);
 
-// function checkKeyPressAndSend() {
-//     if(UP_PRESSED == true) {
-//         console.log("FORWARD");
-//         sendDirection("FORWARD");
-//     }
-//     else if(DOWN_PRESSED == true) {
-//         console.log("DOWN");
-//         sendDirection("BACKWARD");
-//     }
-//     if(LEFT_PRESSED == true) {
-//         console.log("LEFT");
-//         sendDirection("LEFT");
-//     }
-//     if(RIGHT_PRESSED == true) {
-//         console.log("RIGHT");
-//         sendDirection("RIGHT");
-//     }
+document.addEventListener("gamepadconnected", function(e) {
+    console.log("Gamepad connected at index %d: %s. %d buttons, %d axes.",
+      e.gamepad.index, e.gamepad.id,
+      e.gamepad.buttons.length, e.gamepad.axes.length);
+      gamepadHandler(e);
+});
 
-// }
+document.addEventListener("gamepaddisconnected", function(e) {
+    console.log("Gamepad disconnected from index %d: %s",
+      e.gamepad.index, e.gamepad.id);
+      gamepadHandler(e);
+});
+var gamepads = {};
 
-// setInterval(checkKeyPressAndSend,10);
+function gamepadHandler(event, connecting) {
+  var gamepad = event.gamepad;
+  // Note:
+  // gamepad === navigator.getGamepads()[gamepad.index]
+
+  if (connecting) {
+    gamepads[gamepad.index] = gamepad;
+  } else {
+    delete gamepads[gamepad.index];
+  }
+}
+
+currentGamepad = gamepads[0];
+
+console.log(gamepads);
