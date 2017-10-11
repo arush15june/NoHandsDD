@@ -24,8 +24,8 @@ const char* ssid_AP = "Look Ma No Hands";
 const char* password_AP = "";
 IPAddress apIP(192, 168, 12, 24);
 IPAddress netMsk(255, 255, 255, 0);
-const char* ssid_WIFI = "Charge-Fi"; // Your Home WLAN SSID
-const char* password_WIFI = "19951999"; // Your Home WLAN Password
+const char* ssid_WIFI = "chargeSport"; // Your Home WLAN SSID
+const char* password_WIFI = "charge123"; // Your Home WLAN Password
   
 // Update Server Consts
 
@@ -43,7 +43,7 @@ DNSServer dnsServer;
 
 ESP8266WebServer server(80);
 ESP8266HTTPUpdateServer httpUpdater;
-int pins[] = {1, 2, 3, 4, 5, 6};
+int pins[] = {8,7,8,9,5,6};
 DifferentialDrive dd(pins, maxSpeed, maxSpeed);
 
 // Helper Functions
@@ -95,20 +95,20 @@ bool loadFromSpiffs(String path) {
   else if (path.endsWith(".pdf")) dataType = "application/x-pdf";
   else if (path.endsWith(".zip")) dataType = "application/x-zip";
   else if (SPIFFS.exists(pathWithGz) || SPIFFS.exists(path)) {
-    if (SPIFFS.exists(pathWithGz))
-    {
-      Serial.println(pathWithGz + " Sending GZipped");
-      path += ".gz";
-      dataType = "application/x-gzip";
-      server.sendHeader("Content-Encoding","gzip");
-      File dataFile = SPIFFS.open(path.c_str(), "r");
-      if (server.hasArg("download")) dataType = "application/octet-stream";
-      if (server.streamFile(dataFile, dataType) != dataFile.size()) {
-      }
-    
-      dataFile.close();
-      return true;
-    }
+//    if (SPIFFS.exists(pathWithGz))
+//    {
+//      Serial.println(pathWithGz + " Sending GZipped");
+//      path += ".gz";
+//      dataType = "application/x-gzip";
+//      server.sendHeader("Content-Encoding","gzip");
+//      File dataFile = SPIFFS.open(path.c_str(), "r");
+//      if (server.hasArg("download")) dataType = "application/octet-stream";
+//      if (server.streamFile(dataFile, dataType) != dataFile.size()) {
+//      }
+//    
+//      dataFile.close();
+//      return true;
+//    }
   }
   else if (path.endsWith(".gz")) {
     dataType = "application/x-gzip";
@@ -160,23 +160,23 @@ void directionHandler() {
     String dir = server.arg("direction");
     InfoStr("Direction","Recieved: "+dir);
     if(dir.equals("FORWARD")) {
-      dd.forward()
+      dd.forward();
       delay(10);
     }
     else if(dir.equals("BACKWARD")) {
-      dd.backward()
+      dd.backward();
       delay(10);
     }
     else if(dir.equals("LEFT")) {
-      dd.left()
+      dd.left();
       delay(10);
     }
     else if(dir.equals("RIGHT")) {
-      dd.left()
+      dd.left();
       delay(10);
     }
     else if(dir.equals("STOP")) {
-      dd.stop()
+      dd.stop();9
       delay(10);
     }
 
