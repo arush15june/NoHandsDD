@@ -2,10 +2,11 @@
 
 function sendDirection(dir) {
     var xhr = new XMLHttpRequest();
-    xhr.open("PUT", "/direction?direction="+dir, true);
+    xhr.open("POST", "/direction?direction="+dir, true);
     xhr.onload = function (e) {
       if (xhr.readyState === 4) {
-                console.log(xhr.responseText);
+        if (xhr.status === 200) {
+          console.log(xhr.responseText);
         } else {
           console.error(xhr.statusText);
         }
@@ -64,7 +65,7 @@ document.addEventListener("gamepaddisconnected", function(e) {
     console.log("Gamepad disconnected from index %d: %s",
       e.gamepad.index, e.gamepad.id);
       gamepadHandler(e);
-});
+}); 
 var gamepads = {};
 
 function gamepadHandler(event, connecting) {
@@ -80,5 +81,4 @@ function gamepadHandler(event, connecting) {
 }
 
 currentGamepad = gamepads[0];
-
 console.log(gamepads);

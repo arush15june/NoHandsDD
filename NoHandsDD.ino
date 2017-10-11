@@ -18,9 +18,6 @@
 ADC_MODE(ADC_VCC);
 
 /* Constants */
-// DD Constants
-direction currentDirection = STOP;
-
 // WiFI Consts
 
 const char* ssid_AP = "Look Ma No Hands";
@@ -163,19 +160,24 @@ void directionHandler() {
     String dir = server.arg("direction");
     InfoStr("Direction","Recieved: "+dir);
     if(dir.equals("FORWARD")) {
-      currentDirection = FORWARD;
+      dd.forward()
+      delay(10);
     }
-    if(dir.equals("BACKWARD")) {
-      currentDirection = BACKWARD;
+    else if(dir.equals("BACKWARD")) {
+      dd.backward()
+      delay(10);
     }
-    if(dir.equals("LEFT")) {
-      currentDirection = LEFT;
+    else if(dir.equals("LEFT")) {
+      dd.left()
+      delay(10);
     }
-    if(dir.equals("RIGHT")) {
-      currentDirection = RIGHT;
+    else if(dir.equals("RIGHT")) {
+      dd.left()
+      delay(10);
     }
-    if(dir.equals("STOP")) {
-      currentDirection = STOP;
+    else if(dir.equals("STOP")) {
+      dd.stop()
+      delay(10);
     }
 
     server.send(200,"text/plain","direction : "+dir);
@@ -261,20 +263,4 @@ void loop() {
   dnsServer.processNextRequest();
   //HTTP
   server.handleClient();
-
-  if(currentDirection == FORWARD) {
-    dd.forward();
-  }
-  if(currentDirection == BACKWARD) {
-    dd.backward();
-  }
-  if(currentDirection == LEFT) {
-    dd.left();
-  }
-  if(currentDirection == RIGHT) {
-    dd.right();
-  }
-  if(currentDirection == STOP) {
-    dd.stop();
-  }
 }
